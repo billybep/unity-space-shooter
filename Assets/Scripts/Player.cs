@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     private Vector3 laserOffset;
 
-    public float speed = 3.5f;
+    [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private float _speedMultiplier = 2;
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShootPrefab;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private int _lives = 3;
     [SerializeField] private bool _isTripleShootActive = false;
+    [SerializeField] private bool _isSpeedBoostActive = false;
 
     private float _canFire = -1f;
 
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.Translate(direction * _speed * Time.deltaTime);
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
@@ -81,7 +83,7 @@ public class Player : MonoBehaviour
             Instantiate(_tripleShootPrefab, transform.position + laserOffset, Quaternion.identity);
         }
         else
-        { 
+        {
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
         }
     }
@@ -112,5 +114,19 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(5.0f);
             _isTripleShootActive = false;
         }
+    }
+
+    public void SpeedBoostActive()
+    {
+        _isSpeedBoostActive = true;
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+    }
+
+    IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _isSpeedBoostActive = false;
+        _speed /= _speedMultiplier;
     }
 }
