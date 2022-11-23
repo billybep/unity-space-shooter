@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public float speed = 3.5f;
 
     [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private SpawnManager _spawnManager;
+    private SpawnManager _spawnManager;
 
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private int _lives = 3;
