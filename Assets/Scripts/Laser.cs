@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    private float speed = 8;
+    [SerializeField] private float speed = 8;
     private float outBoundY = 8;
 
     // Update is called once per frame

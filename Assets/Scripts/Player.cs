@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Public | private reference
-    // Data type (int, float, bool, string)
-    public float speed = 3.5f;
-
     private Vector3 laserOffset;
+
+    public float speed = 3.5f;
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private float _fireRate = 0.5f;
+    [SerializeField] private int _lives = 3;
+
     private float _canFire = -1f;
 
     // Start is called before the first frame update
@@ -62,5 +62,16 @@ public class Player : MonoBehaviour
 
         _canFire = Time.time + _fireRate;
         Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+    }
+
+    public void Damage()
+    {
+        _lives -= 1;
+
+        if (_lives < 1)
+        {
+            Destroy(gameObject);
+            Debug.Log("GAME OVER");
+        }
     }
 }
