@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
 
             _spawnManager.OnPlayerDeath();
+            _uiManager.UpdateGameStatus();
             Debug.Log("GAME OVER");
         }
     }
