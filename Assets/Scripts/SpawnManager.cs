@@ -41,11 +41,11 @@ public class SpawnManager : MonoBehaviour
         while (!_stopSpawn)
         {
             Vector3 spawnPosition = new Vector3(Random.Range(-9f, 9f), 7, 0);
-            float TripleShootSpawnTime = Random.Range(12.0f, 24.0f);
+            float powerUpSpawnTime = Random.Range(12.0f, 24.0f);
 
-            Instantiate(_powerUp[Random.Range(0, 1)], spawnPosition, Quaternion.identity);
+            Instantiate(_powerUp[Random.Range(0, _powerUp.Length)], spawnPosition, Quaternion.identity);
 
-            yield return new WaitForSeconds(TripleShootSpawnTime);
+            yield return new WaitForSeconds(powerUpSpawnTime);
         }
     }
 
