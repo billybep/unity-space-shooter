@@ -14,12 +14,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _shieldVisualizer;
 
     private SpawnManager _spawnManager;
+    private UIManager _uiManager;
 
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private int _lives = 3;
     [SerializeField] private bool _isTripleShootActive = false;
     [SerializeField] private bool _isSpeedBoostActive = false;
     [SerializeField] private bool _isShieldActive = false;
+    [SerializeField] private int _score = 0;
 
     private float _canFire = -1f;
 
@@ -36,6 +38,15 @@ public class Player : MonoBehaviour
         if (_spawnManager == null)
         {
             Debug.LogError("The spawn manager is NULL.");
+        }
+
+        _uiManager = GameObject
+            .Find("Canvas")
+            .GetComponent<UIManager>();
+
+        if (_uiManager == null)
+        { 
+            Debug.LogError("UIManager is NULL.");
         }
     }
 
@@ -144,5 +155,11 @@ public class Player : MonoBehaviour
     { 
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScore(_score);
     }
 }
