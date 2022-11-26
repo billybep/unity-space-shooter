@@ -14,8 +14,12 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngine, _rightEngine;
 
+
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+
+    [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private AudioSource _audioSource;
 
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private int _lives = 3;
@@ -48,6 +52,16 @@ public class Player : MonoBehaviour
         if (_uiManager == null)
         { 
             Debug.LogError("UIManager is NULL.");
+        }
+
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            Debug.LogError("Audoi Source Player is NULL.");
+        }
+        else
+        {
+            _audioSource.clip = _laserSoundClip;
         }
     }
 
@@ -101,6 +115,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
         }
+
+        _audioSource.Play();
     }
 
     public void Damage()
